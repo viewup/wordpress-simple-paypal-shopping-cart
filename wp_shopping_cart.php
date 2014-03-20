@@ -341,6 +341,9 @@ function print_wp_shopping_cart()
 	    	$postage_cost = 0;
 	    }
 
+      //$_SESSION['simpleCart'][0]['price'] = 1;
+      $discount = calculate_discount();
+
 	    foreach ($_SESSION['simpleCart'] as $item)
 	    {
 	        $output .= "
@@ -385,7 +388,8 @@ function print_wp_shopping_cart()
                 <tr><td colspan='2' style='font-weight: bold; text-align: right;'>".(__("Subtotal", "WSPSC")).": </td><td style='text-align: center'>".print_payment_currency($total, $paypal_symbol, $decimal)."</td><td></td></tr>
                 <tr><td colspan='2' style='font-weight: bold; text-align: right;'>".(__("Shipping", "WSPSC")).": </td><td style='text-align: center'>".print_payment_currency($postage_cost, $paypal_symbol, $decimal)."</td><td></td></tr>";
             }
-
+            // RS here
+            $output .= "<tr><td colspan='2' style='font-weight: bold; text-align: right;'> Card Discount: </td><td style='text-align: center'>".$discount."</td><td></td></tr>";
             $output .= "<tr><td colspan='2' style='font-weight: bold; text-align: right;'>".(__("Total", "WSPSC")).": </td><td style='text-align: center'>".print_payment_currency(($total+$postage_cost), $paypal_symbol, $decimal)."</td><td></td></tr>";
 
             if(isset($_SESSION['wpspsc_cart_action_msg']) && !empty($_SESSION['wpspsc_cart_action_msg'])){
