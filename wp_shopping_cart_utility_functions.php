@@ -24,7 +24,7 @@ function wpspc_get_total_cart_sub_total()
     return $sub_total;
 }
 
-// This calculates the discount. Bespoke for AaminahSnowdon.co.uk
+// RS This calculates the discount. Bespoke for AaminahSnowdon.co.uk
 function calculate_discount() {
   //print_r($_SESSION); 
   // Find the quantity of cards 
@@ -33,12 +33,12 @@ function calculate_discount() {
 
   foreach($_SESSION['simpleCart'] as $item) {
     if (stripos($item['name'], 'Card') !== false) {
-      echo $item['name'];
+      //echo $item['name'];
       $number_of_cards += $item['quantity']; 
     }
   }
 
-  echo 'number of cards: '.$number_of_cards;
+  //echo 'number of cards: '.$number_of_cards;
   
   // Determine the discount applied for the cards based on quantity bought
   if ($number_of_cards <= 4) {
@@ -58,10 +58,6 @@ function calculate_discount() {
   } else {
     $card_price = '2.00';
   }
-
-
-
-
  
   // Go through all the cards and set the card value
   for($i = 0; $i < count($_SESSION['simpleCart']); ++$i) {

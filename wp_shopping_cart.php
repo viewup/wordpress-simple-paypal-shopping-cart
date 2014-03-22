@@ -310,7 +310,9 @@ function print_wp_shopping_cart()
         
     $output .= '<br /><span id="pinfo" style="display: none; font-weight: bold; color: red;">'.(__("Hit enter to submit new Quantity.", "WSPSC")).'</span>';
 	$output .= '<table style="width: 100%;">';    
-    
+   
+    // RS Bespoke. Need this function call here too so that it recalculates properly when the user changes a quantity and re submits. 
+    $discount = calculate_discount();
     $count = 1;
     $total_items = 0;
     $total = 0;
@@ -367,9 +369,10 @@ function print_wp_shopping_cart()
 	        ";        
 	        $count++;
 	    }
-	    if (!get_option('wp_shopping_cart_use_profile_shipping'))
+	    //if (!get_option('wp_shopping_cart_use_profile_shipping'))
 	    {
-	    	$postage_cost = wpspsc_number_format_price($postage_cost);
+	      $postage_cost = 12.11; 
+        $postage_cost = wpspsc_number_format_price($postage_cost);
 	    	$form .= "<input type=\"hidden\" name=\"shipping_1\" value='".$postage_cost."' />"; //You can also use "handling_cart" variable to use shipping and handling here 
 	    }
 	    if (get_option('wp_shopping_cart_collect_address'))//force address collection
@@ -382,14 +385,15 @@ function print_wp_shopping_cart()
        	
        	if ($count)
        	{
-            if ($postage_cost != 0)
+            // RS - There is a pretty custom pricing scheme
+            //if ($postage_cost != 0)
             {
+            // RS Card discount
+            $output .= "<tr><td colspan='2' style='font-weight: bold; text-align: right;'> Card Discount Applied: </td><td style='text-align: center'>".$discount."</td><td></td></tr>";
                 $output .= "
                 <tr><td colspan='2' style='font-weight: bold; text-align: right;'>".(__("Subtotal", "WSPSC")).": </td><td style='text-align: center'>".print_payment_currency($total, $paypal_symbol, $decimal)."</td><td></td></tr>
                 <tr><td colspan='2' style='font-weight: bold; text-align: right;'>".(__("Shipping", "WSPSC")).": </td><td style='text-align: center'>".print_payment_currency($postage_cost, $paypal_symbol, $decimal)."</td><td></td></tr>";
             }
-            // RS here
-            $output .= "<tr><td colspan='2' style='font-weight: bold; text-align: right;'> Card Discount: </td><td style='text-align: center'>".$discount."</td><td></td></tr>";
             $output .= "<tr><td colspan='2' style='font-weight: bold; text-align: right;'>".(__("Total", "WSPSC")).": </td><td style='text-align: center'>".print_payment_currency(($total+$postage_cost), $paypal_symbol, $decimal)."</td><td></td></tr>";
 
             if(isset($_SESSION['wpspsc_cart_action_msg']) && !empty($_SESSION['wpspsc_cart_action_msg'])){
@@ -732,6 +736,7 @@ function cart_current_page_url() {
 
 function simple_cart_total()
 {
+
 	$grand_total = 0;
 	foreach ((array) $_SESSION['simpleCart'] as $item)
 	{
