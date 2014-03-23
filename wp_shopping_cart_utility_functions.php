@@ -25,19 +25,66 @@ function wpspc_get_total_cart_sub_total()
 }
 
 // RS This calculates the discount. Bespoke for AaminahSnowdon.co.uk
+
+// Number of cards in the shopping basket
+function get_number_of_cards() {
+  foreach($_SESSION['simpleCart'] as $item) {
+      if (stripos($item['name'], 'Card') !== false) {
+        //echo $item['name'];
+        $number_of_cards += $item['quantity']; 
+      }
+  }
+  return $number_of_cards;
+}
+
+// Is there a print in the shopping basket?
+function print_in_basket() {
+  foreach($_SESSION['simpleCart'] as $item) {
+      if (stripos($item['name'], 'Print') !== false) {
+        return true;
+      }
+  }
+  return false;
+}
+
+function calculate_shipping() {
+  $number_of_cards = 0; 
+  $total_shipping_cost = 0;
+  $number_of_cards = get_number_of_cards();
+
+  // if there's a print in the basket, that results in free shipping for everything.
+  if (print_in_basket()) {
+    $total_shipping_cost = 0.00;
+  } else {
+    // There's no print in the basket so let's calculate those shipping costs.
+    if ($number_of_cards <= 4) {
+      $total_shipping_cost = '0.99';
+    } else if ($number_of_cards >= 5 && $number_of_cards <= 19) {
+      $total_shipping_cost = '1.29';
+    } else if ($number_of_cards >= 20 && $number_of_cards <= 29) {
+      $total_shipping_cost = '2.49';
+    } else if ($number_of_cards >= 30 && $number_of_cards <= 49) {
+      $total_shipping_cost = '3.49';
+    } else if ($number_of_cards >= 50 && $number_of_cards <= 99) {
+      $total_shipping_cost = '4.99';
+    } else if ($number_of_cards >= 100 && $number_of_cards <= 249) {
+      $total_shipping_cost = '7.99';
+    } else if ($number_of_cards >= 250 && $number_of_cards <= 499) {
+      $total_shipping_cost = '9.99';
+    } else if ($number_of_cards <= 500) {
+      $total_shipping_cost = '9.99';
+    }
+  }
+  return $total_shipping_cost;
+}
+
 function calculate_discount() {
   //print_r($_SESSION); 
   // Find the quantity of cards 
   $number_of_cards = 0; 
   $card_price = '2.50';
 
-  foreach($_SESSION['simpleCart'] as $item) {
-    if (stripos($item['name'], 'Card') !== false) {
-      //echo $item['name'];
-      $number_of_cards += $item['quantity']; 
-    }
-  }
-
+  $number_of_cards = get_number_of_cards(); 
   //echo 'number of cards: '.$number_of_cards;
   
   // Determine the discount applied for the cards based on quantity bought

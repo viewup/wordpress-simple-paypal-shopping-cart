@@ -371,7 +371,7 @@ function print_wp_shopping_cart()
 	    }
 	    //if (!get_option('wp_shopping_cart_use_profile_shipping'))
 	    {
-	      $postage_cost = 12.11; 
+	      $postage_cost = calculate_shipping();
         $postage_cost = wpspsc_number_format_price($postage_cost);
 	    	$form .= "<input type=\"hidden\" name=\"shipping_1\" value='".$postage_cost."' />"; //You can also use "handling_cart" variable to use shipping and handling here 
 	    }
