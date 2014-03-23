@@ -389,7 +389,7 @@ function print_wp_shopping_cart()
             //if ($postage_cost != 0)
             {
             // RS Card discount
-            $output .= "<tr><td colspan='2' style='font-weight: bold; text-align: right;'> Card Discount Applied: </td><td style='text-align: center'>".$discount."</td><td></td></tr>";
+            $output .= "<tr><td colspan='2' style='font-weight: bold; text-align: right;'> Card Discount Applied: </td><td style='text-align: center'>£".$discount."</td><td></td></tr>";
                 $output .= "
                 <tr><td colspan='2' style='font-weight: bold; text-align: right;'>".(__("Subtotal", "WSPSC")).": </td><td style='text-align: center'>".print_payment_currency($total, $paypal_symbol, $decimal)."</td><td></td></tr>
                 <tr><td colspan='2' style='font-weight: bold; text-align: right;'>".(__("Shipping", "WSPSC")).": </td><td style='text-align: center'>".print_payment_currency($postage_cost, $paypal_symbol, $decimal)."</td><td></td></tr>";
