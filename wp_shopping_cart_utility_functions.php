@@ -97,11 +97,11 @@ function calculate_discount() {
   } else if ($number_of_cards >= 50 && $number_of_cards <= 99) {
     $card_price = '2.20';
   } else if ($number_of_cards >= 100 && $number_of_cards <= 249) {
-    $card_price = '2.30';
+    $card_price = '2.10';
   } else if ($number_of_cards >= 250 && $number_of_cards <= 499) {
-    $card_price = '2.30';
+    $card_price = '2.00';
   } else if ($number_of_cards >= 500 && $number_of_cards <= 999) {
-    $card_price = '2.30';
+    $card_price = '2.00';
   } else {
     $card_price = '2.00';
   }
