@@ -61,9 +61,7 @@ function calculate_shipping() {
       $total_shipping_cost = '0.99';
     } else if ($number_of_cards >= 5 && $number_of_cards <= 19) {
       $total_shipping_cost = '1.29';
-    } else if ($number_of_cards >= 20 && $number_of_cards <= 29) {
-      $total_shipping_cost = '2.49';
-    } else if ($number_of_cards >= 30 && $number_of_cards <= 49) {
+    } else if ($number_of_cards >= 20 && $number_of_cards <= 49) {
       $total_shipping_cost = '3.49';
     } else if ($number_of_cards >= 50 && $number_of_cards <= 99) {
       $total_shipping_cost = '4.99';
